@@ -6,10 +6,15 @@
 package com.world.demo.worldmap.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -17,7 +22,7 @@ import javax.persistence.Table;
  * @author Mohamed
  */
 @Entity
-@Table(name = "City")
+@Table(name = "city")
 public class City implements Serializable{
     
     @Id
@@ -30,7 +35,12 @@ public class City implements Serializable{
     private String district;
     @Column(name = "population")
     private int population;
-
+    @JoinColumn(name = "country_code", referencedColumnName = "code", nullable = false)
+    @ManyToOne
+    private Country countryCode;
+    @OneToMany(mappedBy = "capital")
+    private List<Country> countryList;
+    
     public City() {
     }
 
@@ -73,6 +83,21 @@ public class City implements Serializable{
     public void setPopulation(int population) {
         this.population = population;
     }
-    
-    
+
+    public Country getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(Country countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public List<Country> getCountryList() {
+        return countryList;
+    }
+
+    public void setCountryList(List<Country> countryList) {
+        this.countryList = countryList;
+    }
+
 }

@@ -5,19 +5,17 @@
  */
 package com.world.demo.worldmap.repo;
 
-
-
-import com.world.demo.worldmap.entity.City;
-import java.io.Serializable;
+import com.world.demo.worldmap.entity.Country;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author Mohamed.Hamed
+ * @author Mohamed
  */
 @Repository
-public interface CityRepository extends CrudRepository<City, Integer>{
-    
+public interface CountryRepository extends JpaRepository<Country, String>{
+    public Country findByCode(String code);
 }

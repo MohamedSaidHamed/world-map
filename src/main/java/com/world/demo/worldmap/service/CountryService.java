@@ -5,24 +5,22 @@
  */
 package com.world.demo.worldmap.service;
 
-
-import com.world.demo.worldmap.entity.City;
-import com.world.demo.worldmap.repo.CityRepository;
+import com.world.demo.worldmap.entity.Country;
+import com.world.demo.worldmap.repo.CountryRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 /**
  *
- * @author Mohamed.Hamed
+ * @author Mohamed
  */
 @Component
-public class CityService {
+public class CountryService {
     @Autowired
-    CityRepository cityRepository;
+    CountryRepository countryRepository;
     
-    public List<City> findCityByCode(Long id) throws Exception{
-        Iterable<City> optionalCity = cityRepository.findAll();
-        return (List<City>) optionalCity;
+    public Country findCountryByCode(String code) throws Exception{
+        return countryRepository.findByCode(code);
     }
 }

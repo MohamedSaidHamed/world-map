@@ -36,7 +36,7 @@ public class WorldMapApplicationTests {
         assertEquals(result.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @Test
+    //@Test
     public void testGetCountryByCode_Database_Is_Down() {
         System.out.println("testGetCountryByCode_Database_Is_Down");
         String code = "BHR";

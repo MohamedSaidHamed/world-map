@@ -13,10 +13,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -24,18 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin(origins = { "http://localhost:3000", "http://localhost:4200" })
 @RestController
-public class ApplicationController {
+public class CountryController {
 
-    @Autowired
-    CityService cityService;
     @Autowired
     CountryService countryService;
 
-    public ApplicationController(CountryService countryService) {
+    public CountryController(CountryService countryService) {
         this.countryService = countryService;
     }
 
-    @GetMapping(value = "/{code}")
+    @PostMapping(value = "/{code}")
     public ResponseEntity getCountryByCode(@PathVariable String code) {
         try {
             Country country = countryService.findCountryByCode(code.toUpperCase());
@@ -44,7 +39,7 @@ public class ApplicationController {
             }
             return new ResponseEntity<>("INVALID_COUNTRY_CODE", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception ex) {
-            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CountryController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("INTERNAL_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

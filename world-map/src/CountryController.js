@@ -71,7 +71,7 @@ render(){
         return (
             <div className="mainCont">
                 <div className="mainCont-header">
-                    <h1>World Map Welcomes You!</h1>
+                    <h1>Welcome To World Map!</h1>
                 </div>
                 <div className="mainCont-body">
                     <input className="searchField" placeholder="Please enter the country code"

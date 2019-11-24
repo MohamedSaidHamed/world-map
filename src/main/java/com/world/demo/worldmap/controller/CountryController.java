@@ -30,7 +30,7 @@ public class CountryController {
         this.countryService = countryService;
     }
 
-    @PostMapping(value = "/{code}")
+    @GetMapping(value = "/{code}")
     public ResponseEntity getCountryByCode(@PathVariable String code) {
         try {
             Country country = countryService.findCountryByCode(code.toUpperCase());

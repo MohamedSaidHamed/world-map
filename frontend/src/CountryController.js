@@ -1,8 +1,44 @@
 import React, {Component} from 'react';
+import { Button } from 'antd';
+import { Input, Alert, Table, Divider, Tag } from 'antd';
+const { Search } = Input;
 
 const dispatch = (obj) => {
     console.log(obj);
 };
+
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
+        title: 'Continent',
+        dataIndex: 'continent',
+        key: 'continent',
+    },
+    {
+        title: 'Population',
+        dataIndex: 'population',
+        key: 'population',
+    },
+    {
+        title: 'Life Expectancy',
+        dataIndex: 'lifeExpectancy',
+        key: 'lifeExpectancy',
+    },
+    {
+        title: 'Country Language',
+        dataIndex: 'country_language',
+        key: 'country_language',
+    },
+    {
+        title: 'Delete',
+    },
+];
+
+
 
 const checkStatus = response => {
     const hasError = (response.status < 200 || response.status >= 300)
@@ -39,7 +75,7 @@ class CountryController extends Component {
 
 
     retrieveCityByCode(code) {
-        fetchJSON('http://localhost:8080/world_map_war_exploded/' + code,'GET')
+        fetchJSON('http://localhost:8080/world_map_war_exploded/' + code,'POST')
             .then((json) => {
                 this.setState({countryRes: json});
                 this.setState({error: false});
@@ -52,9 +88,9 @@ class CountryController extends Component {
             ).catch((error) => {
             Promise.resolve(error).then((e) => {
                 this.setState({error: true});
-                this.setState({errorMsg: e.toString()});
+                this.setState({errorMsg: e});
                 this.setState({countryRes: []});
-                console.log("-------------"+this.state.errorMsg);
+                console.log("-------------"+e);
                 dispatch({
                     type: 'failure',
                     apiResponse: e,
@@ -70,42 +106,28 @@ class CountryController extends Component {
 render(){
         return (
             <div className="mainCont">
-                <div className="mainCont-header">
-                    <h1>Welcome To World Map!</h1>
-                </div>
+
                 <div className="mainCont-body">
-                    <input className="searchField" placeholder="Please enter the country code"
-                           onChange={(event) => this.updateTextboxVal(event)}/>
-                    <span> </span>
-                    <button className="searchBtn" onClick={() => this.retrieveCityByCode(this.state.searchKey)}>Search</button>
+                    <Search
+                        style={{width:500}}
+                        placeholder="Please enter country code"
+                        enterButton="Search"
+                        size="large"
+                        onSearch={value => this.retrieveCityByCode(value)}
+                    />
                 </div>
                 <br/>
                 <div className="result">
-                    <h3 className="warning">{this.state.errorMsg}</h3>
 
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Continent</th>
-                            <th>Population</th>
-                            <th>Life Expectancy</th>
-                            <th>Country Language</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            <tr>
-                                <td>{this.state.countryRes.name}</td>
-                                <td>{this.state.countryRes.continent}</td>
-                                <td>{this.state.countryRes.population}</td>
-                                <td>{this.state.countryRes.lifeExpectancy}</td>
-                                <td>{this.state.countryRes.country_language}</td>
-                            </tr>
-                        }
-                        </tbody>
+                    <Alert
+                        message="Error"
+                        description={this.state.errorMsg}
+                        type="error"
+                        closable
+                        onClose=""
+                    />
+                    <Table dataSource={this.state.countryRes} columns={columns} />;
 
-                    </table>
                 </div>
 
             </div>
